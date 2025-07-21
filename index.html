@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Hiệu ứng rơi + nhạc + ảnh</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url("nen.png") no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Chữ rơi */
+    .falling-text {
+      position: absolute;
+      font-size: 30px;
+      animation: fall 10s linear infinite, colorChange 2s infinite;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      transform: translateZ(0);
+    }
+
+    @keyframes fall {
+      0% {
+        top: -50px;
+        transform: translateX(0) rotate(0deg);
+      }
+      50% {
+        transform: translateX(100px) rotate(180deg);
+      }
+      100% {
+        top: 100vh;
+        transform: translateX(0) rotate(360deg);
+      }
+    }
+
+    @keyframes colorChange {
+      0% { color: #ff4d4d; }
+      25% { color: #ff00ff; }
+      50% { color: #00ffff; }
+      75% { color: #ffff00; }
+      100% { color: #ff4d4d; }
+    }
+
+    /* Tim rơi */
+    .falling-heart {
+      position: absolute;
+      font-size: 24px;
+      animation: fallHeart 8s linear infinite, colorChange 2s infinite;
+      user-select: none;
+    }
+
+    @keyframes fallHeart {
+      0% {
+        top: -30px;
+        transform: translateX(0) rotate(0deg);
+      }
+      50% {
+        transform: translateX(-80px) rotate(180deg);
+      }
+      100% {
+        top: 100vh;
+        transform: translateX(0) rotate(360deg);
+      }
+    }
+
+    /* Ảnh trình chiếu */
+    .slideshow {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 180px;
+      height: 120px;
+      z-index: 10;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .slideshow img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      animation: slideshowAnim 20s infinite;
+    }
+
+    @keyframes slideshowAnim {
+      0% { opacity: 1; }
+      20% { opacity: 0; }
+      25% { opacity: 1; }
+      45% { opacity: 0; }
+      50% { opacity: 1; }
+      70% { opacity: 0; }
+      75% { opacity: 1; }
+      95% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* Audio hidden */
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Trình chiếu ảnh -->
+<div class="slideshow">
+  <img src="1.jpg" alt="Ảnh 1">
+  <img src="2.jpg" alt="Ảnh 2">
+  <img src="3.jpg" alt="Ảnh 3">
+  <img src="4.jpg" alt="Ảnh 4">
+  <img src="5.jpg" alt="Ảnh 5">
+</div>
+
+<!-- Nhạc nền -->
+<audio autoplay loop>
+  <source src="nhac.mp3" type="audio/mpeg">
+  Trình duyệt không hỗ trợ âm thanh.
+</audio>
+
+<script>
+  // Sinh chữ rơi
+  const texts = ["Anh yêu em", "Minh Vũ 💗 Meo", "Anh Yeu Em Nhiuuu", "Anh Yeu Ebe Cua Anh💗", "Love You"];
+  function createFallingText() {
+    const text = document.createElement("div");
+    text.className = "falling-text";
+    text.style.left = Math.random() * window.innerWidth + "px";
+    text.style.fontSize = (20 + Math.random() * 30) + "px";
+    text.style.animationDuration = (6 + Math.random() * 5) + "s";
+    text.innerText = texts[Math.floor(Math.random() * texts.length)];
+    document.body.appendChild(text);
+    setTimeout(() => text.remove(), 10000);
+  }
+
+  // Sinh tim rơi
+  function createFallingHeart() {
+    const heart = document.createElement("div");
+    heart.className = "falling-heart";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.innerText = "❤";
+    heart.style.fontSize = (20 + Math.random() * 20) + "px";
+    heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 10000);
+  }
+
+  setInterval(createFallingText, 500);
+  setInterval(createFallingHeart, 400);
+</script>
+
+</body>
+</html>
